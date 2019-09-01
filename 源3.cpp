@@ -2,13 +2,13 @@
 #include"stdio.h"
 #include"stdlib.h"
 
-//¹¹ÔìÁ´±íÊı¾İÀàĞÍ
+//æ„é€ é“¾è¡¨æ•°æ®ç±»å‹
 struct node
 {
 	int data;
 	struct node* next;
 };
-//Á´±í³õÊ¼»¯
+//é“¾è¡¨åˆå§‹åŒ–
 struct node* initlist(struct node* L)
 {
 	struct node* head = NULL;
@@ -21,7 +21,7 @@ struct node* initlist(struct node* L)
 	return L = head;
 }
 
-//ÇóÁ´±í½ÚµãµÄ¸öÊı
+//æ±‚é“¾è¡¨èŠ‚ç‚¹çš„ä¸ªæ•°
 int listlength(struct node* L)
 {
 	struct node* p = NULL;
@@ -36,14 +36,14 @@ int listlength(struct node* L)
 }
 
 
-//´´½¨Á´±í
+//åˆ›å»ºé“¾è¡¨
 struct node* createlist(struct node* L, int n)
 {
 	int i;
 	struct node* p = NULL;
 	for (i = n; i > 0; i--)
 	{
-		//°ÑĞÂÉú³ÉµÄ½Úµã²åÈçÁ´±íÖĞ
+		//æŠŠæ–°ç”Ÿæˆçš„èŠ‚ç‚¹æ’å¦‚é“¾è¡¨ä¸­
 		p = (struct node*)malloc(sizeof(struct node));
 		scanf_s("%d", &p->data);
 		p->next = L->next;
@@ -52,13 +52,13 @@ struct node* createlist(struct node* L, int n)
 	return L;
 }
 
-//²åÈëÁ´±í
+//æ’å…¥é“¾è¡¨
 struct node* listinsert(struct node* L, int i, int e)
 {
 	int j = 0;
 	struct node* s = NULL, * p = NULL;
 	p = L;
-	while (!p && j < i - 1)
+	while (!p && j < i - 1)		//!!!!!!!!redundant exclamation symbol!!!!!!
 	{
 		p = p->next;
 		j++;
@@ -68,23 +68,23 @@ struct node* listinsert(struct node* L, int i, int e)
 		printf("not  \n");
 		return L;
 	}
-	//Éú³ÉĞÂµÄ½Úµã
+	//ç”Ÿæˆæ–°çš„èŠ‚ç‚¹
 	s = (struct node*)malloc(sizeof(struct node));
 	s->data = e;
-	//°ÑĞÂµÄ½Úµã²åÈëÁ´±í
+	//æŠŠæ–°çš„èŠ‚ç‚¹æ’å…¥é“¾è¡¨
 	s->next = p->next;
 	p->next = s;
 	return L;
 }
 
 
-//É¾³ıÁ´±íµÄ½áµã
+//åˆ é™¤é“¾è¡¨çš„ç»“ç‚¹
 struct node* listdelete(struct node* L, int i)
 {
 	int j=0;
 	struct node* q = NULL, * p = NULL;
 	p = L;
-	//²éÑ¯½ÚµãÎ»ÖÃ
+	//æŸ¥è¯¢èŠ‚ç‚¹ä½ç½®
 	while (p->next && j < i - 1)
 	{
 		p = p->next;
@@ -95,21 +95,21 @@ struct node* listdelete(struct node* L, int i)
 		printf("not  \n");
 		return L;
 	}
-	//É¾³ıÖ¸¶¨µÄ½Úµã
+	//åˆ é™¤æŒ‡å®šçš„èŠ‚ç‚¹
 	q = p->next;
 	p->next = q->next;
 	free(q);
 	return L;
 }
-//²éÑ¯Á´±íµÄ½Úµã
-struct node* getelem(struct node* L, int i)
+//æŸ¥è¯¢é“¾è¡¨çš„èŠ‚ç‚¹
+void getelem(struct node* L, int i)
 {
 	int j, e;
 	struct node* p = NULL;
 	if (i<1 || i>listlength(L))
 	{
-		printf("ÊäÈë´íÎó");
-		return 0;
+		printf("è¾“å…¥é”™è¯¯");
+		return;
 	}
 	p = L->next;
 	j = 1;
@@ -119,11 +119,11 @@ struct node* getelem(struct node* L, int i)
 		j++;
 	}
 	e = p->data;
-	printf("¸ÃÔªËØÎª%d", e);
+	printf("è¯¥å…ƒç´ ä¸º%d", e);
 }
 
 
-//Á´±í²Ù×÷
+//é“¾è¡¨æ“ä½œ
 
 void menu()
 {
@@ -138,7 +138,7 @@ void menu()
 
 
 
-//Ö÷³ÌĞò
+//ä¸»ç¨‹åº
 int main()
 {
 	int n, m, i, e;
@@ -161,37 +161,37 @@ int main()
 			p = L->next;
 			while (p != NULL)
 			{
-				printf("%d->", p->data);
+				printf("%d->", p->data);	//there will be a redundant '->' at the end.
 				p = p->next;
 			}
-			printf("\b\b\b\b");
+			printf("\b\b\b\b");	//what's this???
 			printf("\n");
 			break;
 		
 		case 2:
-			printf("ÒÀ´ÎÊäÈë²åÈëÔªËØµÄÎ»ÖÃºÍÊı¾İ£¨¿Õ¸ñ¸ô¿ª£©\n");
+			printf("ä¾æ¬¡è¾“å…¥æ’å…¥å…ƒç´ çš„ä½ç½®å’Œæ•°æ®ï¼ˆç©ºæ ¼éš”å¼€ï¼‰\n");
 			scanf_s("%d %d", &i, &e);
 			listinsert(L, i, e);
 			break;
 
 		case 3:
-			printf("ÊäÈëÉ¾³ıÔªËØµÄÎ»ÖÃ\n");
+			printf("è¾“å…¥åˆ é™¤å…ƒç´ çš„ä½ç½®\n");
 			scanf_s("%d", &i);
 			listdelete(L, i);
 			break;
 
 		case 4:
-			printf(" ÊäÈë²éÑ¯½ÚµãµÄÎ»ÖÃ\n");
+			printf(" è¾“å…¥æŸ¥è¯¢èŠ‚ç‚¹çš„ä½ç½®\n");
 			scanf_s("%d", &i);
 			getelem(L, i);
 			break;
 
 		case 0:
-			printf("ÍË³ö\n");
+			printf("é€€å‡º\n");
 			break;
 
 		default:
-			printf("ÊäÈë´íÎó");
+			printf("è¾“å…¥é”™è¯¯");
 		}
 	} while (m != 0);
 
