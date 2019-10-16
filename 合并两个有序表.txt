@@ -1,0 +1,111 @@
+#include"stdio.h"
+#include"stdlib.h"
+
+typedef struct node
+{
+	int data;
+	struct node* next;
+}List;
+
+List* initlist(List* L)
+{
+	List* Head = NULL;
+	Head = (List*)malloc(sizeof(List));
+	if (!Head) return 0;
+	Head->next = NULL;
+	return L = Head;
+}
+
+List* createlist(List* L, int i)
+{
+	int s;
+	List* p = NULL, * end = L;
+	for (s = 0; s < i; s++)
+	{
+		p = (List*)malloc(sizeof(List));
+		printf("input data:");
+		scanf_s("%d", &p->data);
+		end->next = p;
+		end = p;
+		end->next = NULL;
+	}
+	return L;
+}
+
+
+
+List* mergelist(List* L1, int m, List* L2, int n, List* L3)
+{
+	List* q1 = L1->next, * q2 = L2->next, * end = L3;
+	int i;
+	for (i = 0; (i <= m) && (i <= n); i++)
+	{
+		if (q1->data < q2->data)
+		{
+			end->next = q1;
+			end = q1;
+			q1 = q1->next;
+		}
+		else
+		{
+			end->next = q2;
+			end = q2;
+			q2 = q2->next;
+		}
+	}
+	while(i<=m)
+	{
+		end->next = q1;
+		end = q1;
+		q1 = q1->next;
+		i++;
+	}
+	while(i<=n)
+	{
+		end->next = q2;
+		end = q2;
+		q2 = q2->next;
+		i++;
+	}
+	return L3;
+}
+
+int main()
+{
+	int i = 0;
+	List* L1 = NULL, * L2 = NULL, * L3 = NULL;
+	L1 = initlist(L1);
+	L2 = initlist(L2);
+	L3 = initlist(L3);
+	int m, n;//length
+	printf("input two list length with Orderly\n");
+	printf("L1-length:");
+	scanf_s("%d", &m);
+	L1 = createlist(L1, m);
+	List* q1 = L1;
+	printf("L1:");
+	for (i = 0; i < m; i++)
+	{
+		q1 = q1->next;
+		printf("%2d", q1->data);
+	}
+	printf("\nL2-length:");
+	scanf_s("%d", &n);
+	L2 = createlist(L2, n);
+	List* q2 = L2;
+	printf("L2:");
+	for (i = 0; i < n; i++)
+	{
+		q2 = q2->next;
+		printf("%2d", q2->data);
+	}
+	mergelist(L1, m, L2, n, L3);
+	printf("\n");
+	List* P3 = L3;
+	for (i = 0; i < m + n; i++)
+	{
+		P3= P3->next;
+		printf("%2d", P3->data);
+	}
+
+}
