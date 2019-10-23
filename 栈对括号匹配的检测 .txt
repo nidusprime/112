@@ -1,0 +1,89 @@
+
+#include"stdio.h"
+#include"stdlib.h"
+#include"cstdlib"
+
+typedef int SElemtype;
+#define STCAK_INIT_SIZE 100
+#define STACKINCREMENT 10
+
+typedef struct node
+{
+	int stacksize;
+	SElemtype* base;
+	SElemtype* top;
+}stack;
+
+int initstack(stack* s)
+{
+	s->base = (SElemtype*)malloc(STCAK_INIT_SIZE*sizeof(SElemtype));
+	if (!s->base) exit(OVERFLOW);
+	s->top = s->base;
+	s->stacksize = STCAK_INIT_SIZE;
+	return 1;
+}
+
+
+int gettop(stack* s, char &e)
+{
+	if (s->top == s->base) return 0;
+	e = *(s->top - 1);
+	return 1;
+}
+
+int push(stack*s, char e)
+{
+	if (s->top - s->base >= s->stacksize)
+	{
+		s->base = (SElemtype*)realloc(s->base, (s->stacksize + STACKINCREMENT) * sizeof(SElemtype));
+		if (!s->base) exit(OVERFLOW);
+		s->top = s->base + s->stacksize;
+		s->stacksize += STACKINCREMENT;
+	}
+	*s->top++ = e;
+	return 1;
+}
+
+int pop(stack* s, char& e)
+{
+	if (s->top == s->base) return 0;
+	e = *--s->top;
+	return 1;
+}
+ 
+int main()
+{
+	stack s;
+	int i=0,n=0;
+	initstack(&s);
+	char e1,e2,e3;//e1 is first push, e2 is second push ,e3 is gettop 
+	printf("input the expression\n");
+	while (1)//# is end while
+	{
+		if (gettop(&s, e1) == 0)
+		{
+			printf("input base");
+			scanf_s("%c",&e1,sizeof(e1));
+			push(&s, e1);
+			n++;
+		}
+		
+		printf("input e2:");
+		scanf_s("%c", &e2,sizeof(e2));
+		if (e2 == '#') break;
+		n++;
+		e3 = gettop(&s, e3);
+		if ((e3 == '{' && e2 == '}') || (e3 == '[' && e2 == ']') || (e3 == '(' && e2 == ')'))
+		{
+			pop(&s, e1);
+			i++;
+		}
+		else
+			push(&s, e2);
+		
+	}
+	printf("%d\t%d\n", n, i);
+	if ((i == n / 2)&&(i>0)) printf("check ok");
+	else printf("check error");
+	
+}
